@@ -36,37 +36,75 @@ describe('getPrimaryAccountTransactions', () => {
     })
 
     describe('when getPrimaryAccount succeed', () => {
-        let primaryAccountFixture;
+        let getPrimaryAccountResultFixture;
 
         beforeEach((done) => {
-            primaryAccountFixture = {id: 42};
-            getPrimaryAccountDefer.resolve(primaryAccountFixture);
+            getPrimaryAccountResultFixture = {id: 42};
+            getPrimaryAccountDefer.resolve(getPrimaryAccountResultFixture);
             getPrimaryAccountDefer.promise.then(done);
         });
 
         it('should call getTransactions with correct id', () => {
-            expect(getTransactionsSpy).toHaveBeenCalledWith(primaryAccountFixture.id);
+            expect(getTransactionsSpy).toHaveBeenCalledWith(getPrimaryAccountResultFixture.id);
         });
 
         describe('when getTransactions succeed', () => {
-            let transactionsFixture;
+            let getTransactionsResultFixture;
 
             beforeEach((done) => {
-                transactionsFixture = [
+                getTransactionsResultFixture = [
                     {id: 1, amount: 100, name: 'First transaction'},
                     {id: 2, amount: 200, name: 'Second transaction'},
                 ];
-                getTransactionsDefer.resolve(transactionsFixture);
+                getTransactionsDefer.resolve(getTransactionsResultFixture);
                 getTransactionsDefer.promise.then(done);
             });
 
             describe('returned promise', () => {
                 it('should be resolved with correct transactions', (done) => {
                     returnedPromise.then((result) => {
-                        expect(result).toBe(transactionsFixture);
+                        expect(result).toBe(getTransactionsResultFixture);
                         done();
                     });
                 });
+            });
+        });
+
+        describe('when getTransactions failed', () => {
+            let getTransactionsErrorFixture;
+
+            beforeEach((done) => {
+                getTransactionsErrorFixture = new Error();
+                getTransactionsDefer.reject(getTransactionsErrorFixture);
+                getTransactionsDefer.promise.catch(done);
+            });
+
+            describe('returned promise', () => {
+                it('should be rejected with getTransactions error', (done) => {
+                    returnedPromise.catch((error) => {
+                        expect(error).toBe(getTransactionsErrorFixture);
+                        done();
+                    })
+                });
+            });
+        });
+    });
+
+    describe('when getPrimaryAccount failed', () => {
+        let getPrimaryAccountErrorFixture;
+
+        beforeEach((done) => {
+            getPrimaryAccountErrorFixture = new Error();
+            getPrimaryAccountDefer.reject(getPrimaryAccountErrorFixture);
+            getPrimaryAccountDefer.promise.catch(done);
+        });
+
+        describe('returned promise', () => {
+            it('should be rejected with getPrimaryAccount error', (done) => {
+                returnedPromise.catch((error) => {
+                    expect(error).toBe(getPrimaryAccountErrorFixture);
+                    done();
+                })
             });
         });
     });
