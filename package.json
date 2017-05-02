@@ -1,0 +1,21 @@
+{
+  "name": "jasmine-spies-and-rewire-demo",
+  "version": "1.0.0",
+  "description": "Demo project that uses Jasmine Spies and Rewire to mock everything in unit tests",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmytroyarmak/jasmine-spies-and-rewire-demo.git"
+  },
+  "author": "Dmytro Yarmak <dmytroyarmak@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmytroyarmak/jasmine-spies-and-rewire-demo/issues"
+  },
+  "homepage": "https://github.com/dmytroyarmak/jasmine-spies-and-rewire-demo#readme"
+}
